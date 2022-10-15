@@ -1,11 +1,7 @@
 <script setup>
 import { usePreload } from "lingo3d-vue"
 import { ref, watchEffect } from "vue"
-import Login from "./Login.vue"
-
-
-
-
+import Intro from "./view/base/Intro.vue"
 
 // 加载
 const progress = usePreload(["fairy.glb", "idle.fbx", "person.glb", "running.fbx", "skybox.jpg"], "21.2mb")
@@ -24,7 +20,7 @@ watchEffect(() => {
 
 <template>
   <div>
-    <Login />
+    <router-view></router-view>
   </div>
 </template>
 

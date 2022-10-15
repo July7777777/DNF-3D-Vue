@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { World, Model, ThirdPersonCamera, useKeyboard, useLoop, Skybox } from "lingo3d-vue"
 import { ref } from "vue"
+import Music from "../../components/common/Music.vue";
 
 const characterRef = ref()
 const key = useKeyboard()
@@ -10,13 +11,23 @@ useLoop(() => {
   if (key.value === "w") {
     running.value = true
     characterRef.value.moveForward(-6)
+  } else if(key.value === "s"){
+    running.value = true
+    characterRef.value.moveForward(6)
+  } else if (key.value === "a") {
+    running.value = true
+    characterRef.value.moveRight(6)
+  } else if(key.value === "d"){
+    running.value = true
+    characterRef.value.moveRight(-6)
   } else {
     running.value = false
   }
 })
-</script>
+</script> 
 
 <template>
+  <Music musicSrc='/src/assets/bgm/town/forest_town.ogg' />
   <World>
     <Model src="fairy.glb" :scale="20" physics="map" />
     <ThirdPersonCamera active mouseControl>
@@ -30,6 +41,6 @@ useLoop(() => {
         :animation="running ? 'runningAnimation' : 'idleAnimation'"
       />
     </ThirdPersonCamera>
-    <Skybox texture="/public/新建文件夹/skybox.jpg" />
+    <Skybox texture="skybox.jpg" />
   </World>
 </template>

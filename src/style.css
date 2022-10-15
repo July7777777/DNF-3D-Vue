@@ -20,3 +20,6 @@ html,body{
   /* 背景图片来自CSDN https://www.csdn.net/ */
   background: url(./assets/img/base/loginBG.gif) repeat #0a0a0a;
 }
+.pointer{
+  cursor:pointer
+}

@@ -1,6 +1,12 @@
 <script setup>
-import { ref, watchEffect } from "vue"
-
+import { ref } from "vue"
+let src = ref()
+let listID = ref(0)
+const props = defineProps({
+  loadingImg: '',
+  musicSrc: '',
+  musicList: Array,
+})
 
 // 音乐 
 const Music = ref()
@@ -9,23 +15,34 @@ let MusicState = ref(false)
 
 let play = () => {
   // 音乐状态aaa
-  if(Music.value.paused){
+  if (Music.value.paused) {
     Music.value.play()
-    MusicState.value=true
-  }else{
+    MusicState.value = true
+  } else {
     Music.value.pause()
-    MusicState.value=false
+    MusicState.value = false
   }
 }
-// 音乐 
+// 音乐 列表
 // 生成随机数
-//  Math.round(Math.random()*musicSrc.length);
+function randomNumber(max) {
+  return Math.round(Math.random() * (max || 1));
+}
 
-defineProps({
-  loadingImg:'',
-  musicSrc:'',
-  musicSrc:Array,
-})
+function audioFinished() {
+  console.log(props.musicList)
+  if (props.musicList && props.musicList.length > 1) {
+    console.log(1111)
+    src.value = props.musicList[randomNumber(props.musicList.length-1)]
+  } else {
+    // 这里可以加个判断 如果有值就不赋值
+    src.value = props.musicSrc && props.musicSrc
+  }
+}
+
+audioFinished()
+
+
 </script>
 
 <template>
@@ -33,7 +50,7 @@ defineProps({
     <div id="play" :class="MusicState?'run':'shake'" v-on:click="play">
       <img src="/src/assets/img/base/play2.png" alt="">
     </div>
-    <audio ref="Music" autoplay loop :src='musicSrc'></audio>
+    <audio ref="Music" autoplay loop :src='src' @ended="audioFinished"></audio>
   </div>
 </template>
 
@@ -46,28 +63,33 @@ defineProps({
   right: 0px;
   width: 30px;
   height: 30px;
-  cursor:pointer
+  cursor: pointer
 }
 
 img {
   width: 100%;
   height: 100%;
 }
-.shake{
+
+.shake {
   animation: shake 1.5s ease infinite;
 }
-.run{
-  animation: run 5s linear  infinite;
+
+.run {
+  animation: run 5s linear infinite;
 }
+
 @keyframes shake {
 
   from,
   to {
     transform: translate3d(0, 0, 0);
   }
-  0%{
+
+  0% {
     transform: translate3d(0, 0, 0);
   }
+
   10%,
   30% {
     transform: translate3d(-3px, 0, 0);
@@ -83,6 +105,7 @@ img {
   0% {
     transform: rotate(0deg);
   }
+
   0% {
     transform: rotate(-360deg);
   }
