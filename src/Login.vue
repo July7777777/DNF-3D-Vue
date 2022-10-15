@@ -6,6 +6,10 @@ import src3 from './assets/img/base/3.jpg'
 import src4 from './assets/img/base/4.jpg'
 import src5 from './assets/img/base/5.jpg'
 import src6 from './assets/img/base/6.jpg'
+import Music from "./components/common/Music.vue"
+import character from './assets/bgm/base/character.mp3'
+import pursuit from './assets/bgm/base/pursuit.ogg'
+
 // 添加背景
 document.getElementById('app').setAttribute("class", "fullpage")
 
@@ -42,11 +46,15 @@ defineProps({
     <div v-else class="threeDBox">
       <div id="threeD" :class="is3D?'threeD':''">
         <img v-for="item in list" :key="item.id" :src="item.src">
+        <img id="magic" src="/src/assets/img/base/magic.png" alt="">
+        
       </div>
     </div>
   </div>
+  <Music :musicSrc='is3D?character:character'/>
 </template>
 <style  scoped >
+
 #threeD {
   width: 280px;
   height: 400px;
@@ -76,35 +84,45 @@ defineProps({
 }
 
 #threeD img {
-  width: 750px;
-  height: 350px;
+  width: 695px;
+  /* height: 350px; */
   position: absolute;
   left: 0;
   top: 0;
 }
+#threeD #magic{
+  width: 600px;
+  height: 600px;
+  top: 400px;
+  transform-style: preserve-3d;
+  transform: rotateX(90deg) rotateY(0deg);
+  border-radius: 50%;
+  animation: easeInOut 30s ease 1;
 
+  box-shadow: 0px 0px 110px 77px rgb(59, 165, 246);
+}
 #threeD img:nth-child(1) {
-  transform: rotateY(0deg) translateZ(650px);
+  transform: rotateY(0deg) translateZ(600px);
 }
 
 #threeD img:nth-child(2) {
-  transform: rotateY(60deg) translateZ(650px);
+  transform: rotateY(60deg) translateZ(600px);
 }
 
 #threeD img:nth-child(3) {
-  transform: rotateY(120deg) translateZ(650px);
+  transform: rotateY(120deg) translateZ(600px);
 }
 
 #threeD img:nth-child(4) {
-  transform: rotateY(180deg) translateZ(650px);
+  transform: rotateY(180deg) translateZ(600px);
 }
 
 #threeD img:nth-child(5) {
-  transform: rotateY(240deg) translateZ(650px);
+  transform: rotateY(240deg) translateZ(600px);
 }
 
 #threeD img:nth-child(6) {
-  transform: rotateY(300deg) translateZ(650px);
+  transform: rotateY(300deg) translateZ(600px);
 }
 
 
@@ -153,10 +171,10 @@ defineProps({
 }
 
 .threeDBox {
-  animation: threeD 6s ease 1;
+  animation: easeInOut 6s ease 1;
 }
 
-@keyframes threeD {
+@keyframes easeInOut {
   0% {
     opacity: 0;
   }
